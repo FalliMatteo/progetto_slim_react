@@ -6,7 +6,7 @@ export default function FormDiInserimento({popolaAlunni}){
     const [risposta, setRisposta] = useState("");
 
     async function salvaAlunno(){
-        setRisposta(<p>Caricamento...</p>)
+        setRisposta(<><br /><span>Caricamento...</span></>)
         const response = await fetch(`http://localhost:8080/alunni`, 
             {  
               method: "POST",
@@ -15,9 +15,9 @@ export default function FormDiInserimento({popolaAlunni}){
             }
         );
         if(response.status == 400){
-            setRisposta(<p className="error">Campi inseriti invalidi</p>)
+            setRisposta(<><br /><span className="error">Valori inseriti invalidi</span></>)
         }else{
-            setRisposta(<p>Persona aggiunta</p>)
+            setRisposta(<><br /><span>Alunno aggiunto</span></>)
         }
         popolaAlunni();
     }
@@ -31,10 +31,10 @@ export default function FormDiInserimento({popolaAlunni}){
 
     return(
         <>
-            <h1>Form di inseriemto</h1>
+            <h3>Form di inserimento</h3>
             <div>Nome: <input type="text" onChange={gestisciCambioNome} /></div><br />
             <div>Cognome: <input type="text"  onChange={gestisciCambioCognome} /></div><br />
-            <div><button onClick={salvaAlunno}>salva</button></div><br />
+            <div><button onClick={salvaAlunno}>salva</button></div>
             {risposta}
         </>
 

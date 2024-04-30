@@ -54,30 +54,40 @@ class AlunniController
     return $response->withHeader("Content-type", "application/json")->withStatus($code);
   }
 
-  public function update(Request $request, Response $response, $args){
+  public function updateNome(Request $request, Response $response, $args){
     sleep(2);
     $db = $this->connectDB();
     $id = $args["id"];
     $data = json_decode($request->getBody()->getContents(), true);
     $nome = $data["nome"];
-    $cognome = $data["cognome"];
-    $kek = true;
     if($nome != ""){
       $result = $db->query("UPDATE alunni SET nome = '$nome' WHERE id = $id");
-      if(!$result){
-        $kek = false;
+      if($result){
+        $code = 200;
+      }else{
+        $code = 500;
       }
-    }
-    if($cognome != ""){
-      $result = $db->query("UPDATE alunni SET cognome = '$cognome' WHERE id = $id");
-      if(!$result){
-        $kek = false;
-      }
-    }
-    if($kek){
-      $code = 200;
     }else{
-      $code = 500;
+      $code = 400;
+    }
+    return $response->withHeader("Content-type", "application/json")->withStatus($code);
+  }
+
+  public function updateCognome(Request $request, Response $response, $args){
+    sleep(2);
+    $db = $this->connectDB();
+    $id = $args["id"];
+    $data = json_decode($request->getBody()->getContents(), true);
+    $cognome = $data["cognome"];
+    if($nome != ""){
+      $result = $db->query("UPDATE alunni SET cognome = '$cognome' WHERE id = $id");
+      if($result){
+        $code = 200;
+      }else{
+        $code = 500;
+      }
+    }else{
+      $code = 400;
     }
     return $response->withHeader("Content-type", "application/json")->withStatus($code);
   }
