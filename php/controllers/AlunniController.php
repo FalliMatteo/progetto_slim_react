@@ -41,11 +41,15 @@ class AlunniController
     $data = json_decode($request->getBody()->getContents(), true);
     $nome = $data["nome"];
     $cognome = $data["cognome"];
-    $result = $db->query("INSERT INTO alunni (nome, cognome) VALUES('$nome', '$cognome')");
-    if($result){
-      $code = 201;
+    if($nome === "" || $cognome === ""){
+      $code = 400;
     }else{
-      $code = 500;
+      $result = $db->query("INSERT INTO alunni (nome, cognome) VALUES('$nome', '$cognome')");
+      if($result){
+        $code = 201;
+      }else{
+        $code = 500;
+      }
     }
     return $response->withHeader("Content-type", "application/json")->withStatus($code);
   }

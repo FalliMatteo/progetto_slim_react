@@ -2,41 +2,41 @@ import {useState} from 'react';
 
 export default function Alunno({alunno, popolaAlunni}){
     const [inCancellazione, setInCancellazione] = useState(false);
-    const [richiestaConferma, setRichiestaConferma] = useState(false);
+    const [confermaCancellazione, setConfermaCancellazione] = useState(false);
 
 
     async function cancellaAlunno(){
-        setRichiestaConferma(false);
+        setConfermaCancellazione(false);
         setInCancellazione(true)
         await fetch(`http://localhost:8080/alunni/${alunno.id}`, {method: "DELETE"});
         popolaAlunni();
     }
     
     function richiesta(){
-        setRichiestaConferma(true);
+        setConfermaCancellazione(true);
     }
 
     function annulla(){
-        setRichiestaConferma(false);
+        setConfermaCancellazione(false);
     }
     return(
-        <div>
-            {alunno.nome} {alunno.cognome}
-            
-            { richiestaConferma ?
-                <span>Sei sicuro? 
-                <button onClick={cancellaAlunno}>si</button>
-                <button onClick={annulla}>no</button>
-                </span>
-            :
-              <button onClick={richiesta}>Cancella</button>
-            }
-            { inCancellazione &&
-                <span>in fase di cancellazione </span>
+        <tr>
+            <td>{alunno.nome}</td><td>{alunno.cognome}</td>
+            { inCancellazione ?
+                <td>Caricamento... </td>
+              :
+                confermaCancellazione ?
+                    <td>Sei sicuro? 
+                    <button onClick={cancellaAlunno}>si</button>
+                    <button onClick={annulla}>no</button>
+                    </td>
+                :
+                    <td><button onClick={richiesta}>Cancella</button></td>
+              
             }
             <hr />
 
-        </div>
+        </tr>
 
     )
 }

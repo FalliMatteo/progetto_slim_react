@@ -1,5 +1,5 @@
 import './App.css';
-import Alunno from './Alunno'
+import Alunni from './Alunni'
 import FormDiInserimento from './FormDiInserimento'
 import {useState, useEffect} from 'react'
 
@@ -22,19 +22,18 @@ function App() {
 
   return (
     <div className="App">
+      <h1>Progetto React/Slim</h1>
       {
         pronto ?
-          alunni.map(a => (
-            <Alunno alunno={a} popolaAlunni={popolaAlunni} key={a.id} />
-          ))
+          <Alunni alunni={alunni} popolaAlunni={popolaAlunni}/>
         :
          <div>Loading...</div>
       }
-
+      <br />
       <button onClick={() => setMostraForm(true)}>Inserisci nuovo alunno</button>
       { mostraForm &&
         <div>
-          <div><FormDiInserimento /></div>
+          <div><FormDiInserimento popolaAlunni={popolaAlunni} /></div><br />
           <button onClick={() => setMostraForm(false)}>Annulla inserimento</button>
         </div>
       }
